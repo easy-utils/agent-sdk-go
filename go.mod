@@ -3,7 +3,7 @@ module github.com/easy-utils/agent-sdk-go
 go 1.26.0
 
 require (
-	github.com/easy-utils/agent-proto v0.13.0
+	github.com/easy-utils/agent-proto v0.13.1
 	github.com/easy-utils/easy-rpc-go v0.2.0
 )
 

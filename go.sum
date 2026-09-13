@@ -1,5 +1,5 @@
-github.com/easy-utils/agent-proto v0.13.0 h1:EJzthdv2sOcuGpQYgiNhAbhEf5GrMaNoGA4CL+BXJI8=
-github.com/easy-utils/agent-proto v0.13.0/go.mod h1:eN/I71ZN4T2K9T26KN67TS0WxLIRMJPeuVVFTlsOtgw=
+github.com/easy-utils/agent-proto v0.13.1 h1:jd69Wl5Dj7p+S+53NFSNhdKxoXBtH1KccJMq6vgv1w0=
+github.com/easy-utils/agent-proto v0.13.1/go.mod h1:eN/I71ZN4T2K9T26KN67TS0WxLIRMJPeuVVFTlsOtgw=
 github.com/easy-utils/easy-rpc-go v0.2.0 h1:UgSA8m7Fcl3X+Rs4SGUSorXTFUhxdghtVAEMMZ8UEkM=
 github.com/easy-utils/easy-rpc-go v0.2.0/go.mod h1:ak4GsaZDIruq9HlamCSzHisPDnyHMvjJD5cgcgM9zIs=
 github.com/google/go-cmp v0.7.0 h1:wk8382ETsv4JYUZwIsn6YpYiWiBsYLSJiTsyBybVuN8=
