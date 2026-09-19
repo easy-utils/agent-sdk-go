@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	agentv1 "github.com/easy-utils/agent-proto/agent/v1"
+	agentv1 "github.com/easy-utils/agent-sdk-go/agent/v1"
 	"github.com/easy-utils/easy-rpc-go"
 )
 
@@ -77,7 +77,6 @@ func (s *stubAgent) ListProviders(ctx context.Context, _ *agentv1.ListProvidersR
 func (s *stubAgent) ListProvidersCatalog(ctx context.Context, _ *agentv1.ListProvidersCatalogRequest) (*agentv1.ListProvidersCatalogResponse, error) { return nil, nil }
 func (s *stubAgent) RegisterProvider(ctx context.Context, _ *agentv1.RegisterProviderRequest) (*agentv1.RegisterProviderResponse, error) { return nil, nil }
 func (s *stubAgent) DeleteProvider(ctx context.Context, _ *agentv1.DeleteProviderRequest) (*agentv1.DeleteProviderResponse, error) { return nil, nil }
-func (s *stubAgent) DiscoverGatewayModels(ctx context.Context, _ *agentv1.DiscoverGatewayModelsRequest) (*agentv1.DiscoverGatewayModelsResponse, error) { return nil, nil }
 func (s *stubAgent) TestProvider(ctx context.Context, _ *agentv1.TestProviderRequest) (*agentv1.TestProviderResponse, error) { return nil, nil }
 func (s *stubAgent) ListModels(ctx context.Context, _ *agentv1.ListModelsRequest) (*agentv1.ListModelsResponse, error) { return nil, nil }
 func (s *stubAgent) ListPresets(ctx context.Context, _ *agentv1.ListPresetsRequest) (*agentv1.ListPresetsResponse, error) { return nil, nil }
@@ -119,12 +118,25 @@ func (w *memWriter) WriteFrame(payload []byte) error    { w.body = append(w.body
 
 func (t *inMemoryTransport) Send(ctx context.Context, req easyrpc.Request) (easyrpc.Response, error) {
 	w := &memWriter{status: 200}
+	// The real net/http bridge sets the unary content-type when the caller
+	// omitted it; Dispatch (easy-rpc-go v1.4) requires it for codec/shape
+	// negotiation, so mirror that here.
+	if req.Headers.Get("Content-Type") == "" {
+		if req.Headers == nil {
+			req.Headers = easyrpc.Headers{}
+		}
+		req.Headers.Set("Content-Type", easyrpc.ContentTypeUnary)
+	}
 	_ = easyrpc.Dispatch(ctx, req, agentv1.AgentService_Methods(), t.reg, w)
 	resp := easyrpc.Response{Status: w.status, Headers: w.headers, Body: w.body}
-	// Mirror the real bridge: reconstruct the connect error from headers.
+	// Mirror the real bridge: reconstruct the connect error from the
+	// connect-code header when present, else from the JSON error body (which
+	// carries the exact code — several Connect codes share an HTTP status).
 	if w.status >= 300 {
 		if e := easyrpc.StatusFromHeader(w.headers); e != nil {
 			resp.Error = e
+		} else if c, m, ds := easyrpc.DecodeErrorJSON(w.body); c != 0 {
+			resp.Error = &easyrpc.RPCError{Code: c, Message: m, Details: ds}
 		} else {
 			resp.Error = &easyrpc.RPCError{Code: easyrpc.ConnectFromStatus(w.status), Message: string(w.body)}
 		}

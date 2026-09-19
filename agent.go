@@ -16,7 +16,7 @@ import (
 
 	easyrpc "github.com/easy-utils/easy-rpc-go"
 
-	agentv1 "github.com/easy-utils/agent-proto/agent/v1"
+	agentv1 "github.com/easy-utils/agent-sdk-go/agent/v1"
 )
 
 // Client is a thin, status-aware agent session/file client.
