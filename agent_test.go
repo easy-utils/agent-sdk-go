@@ -93,6 +93,9 @@ func (s *stubAgent) UploadFile(ctx context.Context, _ *agentv1.UploadFileRequest
 func (s *stubAgent) IngestFile(ctx context.Context, _ *agentv1.IngestFileRequest) (*agentv1.IngestFileResponse, error) { return nil, nil }
 func (s *stubAgent) GetFile(ctx context.Context, _ *agentv1.GetFileRequest) (*agentv1.GetFileResponse, error) { return nil, nil }
 func (s *stubAgent) GetFileMeta(ctx context.Context, _ *agentv1.GetFileMetaRequest) (*agentv1.GetFileMetaResponse, error) { return nil, nil }
+func (s *stubAgent) GetFileStream(ctx context.Context, _ *agentv1.GetFileRequest, _ func(*agentv1.FileChunk) error) error {
+	return nil
+}
 func (s *stubAgent) GetAgentConfig(ctx context.Context, _ *agentv1.GetAgentConfigRequest) (*agentv1.GetAgentConfigResponse, error) { return nil, nil }
 
 // inMemoryTransport dispatches to a registered AgentService in-process.

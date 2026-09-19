@@ -48,6 +48,7 @@ func AgentService_Methods() []easyrpc.MethodSpec {
 		{Service: "agent.v1.AgentService", Name: "IngestFile", Path: "/agent.v1.AgentService/IngestFile", ClientStream: false, ServerStream: false},
 		{Service: "agent.v1.AgentService", Name: "GetFile", Path: "/agent.v1.AgentService/GetFile", ClientStream: false, ServerStream: false},
 		{Service: "agent.v1.AgentService", Name: "GetFileMeta", Path: "/agent.v1.AgentService/GetFileMeta", ClientStream: false, ServerStream: false},
+		{Service: "agent.v1.AgentService", Name: "GetFileStream", Path: "/agent.v1.AgentService/GetFileStream", ClientStream: false, ServerStream: true},
 		{Service: "agent.v1.AgentService", Name: "GetAgentConfig", Path: "/agent.v1.AgentService/GetAgentConfig", ClientStream: false, ServerStream: false},
 	}
 }
@@ -458,6 +459,12 @@ func (c *AgentServiceClient) GetFileMeta(ctx context.Context, in *GetFileMetaReq
 	return out, nil
 }
 
+func (c *AgentServiceClient) GetFileStream(ctx context.Context, in *GetFileRequest, opts ...easyrpc.CallOption) (easyrpc.Stream, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	return c.rt.OpenStream(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/GetFileStream", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(true, kind)}}, Body: easyrpc.Frame(encodeMsg(in, kind), false)})
+}
+
 func (c *AgentServiceClient) GetAgentConfig(ctx context.Context, in *GetAgentConfigRequest, opts ...easyrpc.CallOption) (*GetAgentConfigResponse, error) {
 	kind := easyrpc.KindProto
 	for _, o := range opts { o(&kind) }
@@ -508,6 +515,7 @@ type AgentServiceService interface {
 	IngestFile(ctx context.Context, in *IngestFileRequest) (*IngestFileResponse, error)
 	GetFile(ctx context.Context, in *GetFileRequest) (*GetFileResponse, error)
 	GetFileMeta(ctx context.Context, in *GetFileMetaRequest) (*GetFileMetaResponse, error)
+	GetFileStream(ctx context.Context, in *GetFileRequest, emit func(*FileChunk) error) error
 	GetAgentConfig(ctx context.Context, in *GetAgentConfigRequest) (*GetAgentConfigResponse, error)
 }
 
@@ -810,6 +818,12 @@ func RegisterAgentServiceService(impl AgentServiceService) *easyrpc.ServiceRegis
 		out, err := impl.GetFileMeta(ctx, in)
 		if err != nil { return nil, err }
 		return encodeMsg(out, kind), nil
+	}
+	reg.Stream["GetFileStream"] = func(ctx context.Context, req []byte, emit func([]byte, bool) error) error {
+		in := &GetFileRequest{}
+		if err := decodeMsg(req, in, easyrpc.HandlerContextFromContext(ctx).Kind); err != nil { return err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		return impl.GetFileStream(ctx, in, func(out *FileChunk) error { return emit(encodeMsg(out, kind), false) })
 	}
 	reg.Unary["GetAgentConfig"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &GetAgentConfigRequest{}
