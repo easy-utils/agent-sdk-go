@@ -4,6 +4,7 @@ package agentv1
 import (
 	easyrpc "github.com/easy-utils/easy-rpc-go"
 	"context"
+	"google.golang.org/protobuf/encoding/protojson"
 	"google.golang.org/protobuf/proto"
 )
 
@@ -54,339 +55,417 @@ func AgentService_Methods() []easyrpc.MethodSpec {
 type AgentServiceClient struct { rt easyrpc.Transport }
 func NewAgentServiceClient(rt easyrpc.Transport) *AgentServiceClient { return &AgentServiceClient{rt: rt} }
 
-func (c *AgentServiceClient) Health(ctx context.Context, in *HealthRequest) (*HealthResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/Health", Body: protoBytes(in)})
+func (c *AgentServiceClient) Health(ctx context.Context, in *HealthRequest, opts ...easyrpc.CallOption) (*HealthResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/Health", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &HealthResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) ListSessions(ctx context.Context, in *ListSessionsRequest) (*ListSessionsResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/ListSessions", Body: protoBytes(in)})
+func (c *AgentServiceClient) ListSessions(ctx context.Context, in *ListSessionsRequest, opts ...easyrpc.CallOption) (*ListSessionsResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/ListSessions", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &ListSessionsResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) CreateSession(ctx context.Context, in *CreateSessionRequest) (*CreateSessionResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/CreateSession", Body: protoBytes(in)})
+func (c *AgentServiceClient) CreateSession(ctx context.Context, in *CreateSessionRequest, opts ...easyrpc.CallOption) (*CreateSessionResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/CreateSession", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &CreateSessionResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) GetSession(ctx context.Context, in *GetSessionRequest) (*GetSessionResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/GetSession", Body: protoBytes(in)})
+func (c *AgentServiceClient) GetSession(ctx context.Context, in *GetSessionRequest, opts ...easyrpc.CallOption) (*GetSessionResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/GetSession", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &GetSessionResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) DeleteSession(ctx context.Context, in *DeleteSessionRequest) (*DeleteSessionResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/DeleteSession", Body: protoBytes(in)})
+func (c *AgentServiceClient) DeleteSession(ctx context.Context, in *DeleteSessionRequest, opts ...easyrpc.CallOption) (*DeleteSessionResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/DeleteSession", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &DeleteSessionResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) ListMessages(ctx context.Context, in *ListMessagesRequest) (*ListMessagesResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/ListMessages", Body: protoBytes(in)})
+func (c *AgentServiceClient) ListMessages(ctx context.Context, in *ListMessagesRequest, opts ...easyrpc.CallOption) (*ListMessagesResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/ListMessages", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &ListMessagesResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) Prompt(ctx context.Context, in *PromptRequest) (easyrpc.Stream, error) {
-	return c.rt.OpenStream(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/Prompt", Body: easyrpc.Frame(protoBytes(in), false)})
+func (c *AgentServiceClient) Prompt(ctx context.Context, in *PromptRequest, opts ...easyrpc.CallOption) (easyrpc.Stream, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	return c.rt.OpenStream(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/Prompt", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(true, kind)}}, Body: easyrpc.Frame(encodeMsg(in, kind), false)})
 }
 
-func (c *AgentServiceClient) WatchSession(ctx context.Context, in *WatchSessionRequest) (easyrpc.Stream, error) {
-	return c.rt.OpenStream(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/WatchSession", Body: easyrpc.Frame(protoBytes(in), false)})
+func (c *AgentServiceClient) WatchSession(ctx context.Context, in *WatchSessionRequest, opts ...easyrpc.CallOption) (easyrpc.Stream, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	return c.rt.OpenStream(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/WatchSession", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(true, kind)}}, Body: easyrpc.Frame(encodeMsg(in, kind), false)})
 }
 
-func (c *AgentServiceClient) WatchSessions(ctx context.Context, in *WatchSessionsRequest) (easyrpc.Stream, error) {
-	return c.rt.OpenStream(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/WatchSessions", Body: easyrpc.Frame(protoBytes(in), false)})
+func (c *AgentServiceClient) WatchSessions(ctx context.Context, in *WatchSessionsRequest, opts ...easyrpc.CallOption) (easyrpc.Stream, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	return c.rt.OpenStream(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/WatchSessions", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(true, kind)}}, Body: easyrpc.Frame(encodeMsg(in, kind), false)})
 }
 
-func (c *AgentServiceClient) Fork(ctx context.Context, in *ForkRequest) (*ForkResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/Fork", Body: protoBytes(in)})
+func (c *AgentServiceClient) Fork(ctx context.Context, in *ForkRequest, opts ...easyrpc.CallOption) (*ForkResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/Fork", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &ForkResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) Rename(ctx context.Context, in *RenameRequest) (*RenameResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/Rename", Body: protoBytes(in)})
+func (c *AgentServiceClient) Rename(ctx context.Context, in *RenameRequest, opts ...easyrpc.CallOption) (*RenameResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/Rename", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &RenameResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) SetModel(ctx context.Context, in *SetModelRequest) (*SetModelResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/SetModel", Body: protoBytes(in)})
+func (c *AgentServiceClient) SetModel(ctx context.Context, in *SetModelRequest, opts ...easyrpc.CallOption) (*SetModelResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/SetModel", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &SetModelResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) Undo(ctx context.Context, in *UndoRequest) (*UndoResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/Undo", Body: protoBytes(in)})
+func (c *AgentServiceClient) Undo(ctx context.Context, in *UndoRequest, opts ...easyrpc.CallOption) (*UndoResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/Undo", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &UndoResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) State(ctx context.Context, in *StateRequest) (*StateResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/State", Body: protoBytes(in)})
+func (c *AgentServiceClient) State(ctx context.Context, in *StateRequest, opts ...easyrpc.CallOption) (*StateResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/State", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &StateResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) Mailbox(ctx context.Context, in *MailboxRequest) (*MailboxResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/Mailbox", Body: protoBytes(in)})
+func (c *AgentServiceClient) Mailbox(ctx context.Context, in *MailboxRequest, opts ...easyrpc.CallOption) (*MailboxResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/Mailbox", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &MailboxResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) UpdateSettings(ctx context.Context, in *UpdateSettingsRequest) (*UpdateSettingsResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/UpdateSettings", Body: protoBytes(in)})
+func (c *AgentServiceClient) UpdateSettings(ctx context.Context, in *UpdateSettingsRequest, opts ...easyrpc.CallOption) (*UpdateSettingsResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/UpdateSettings", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &UpdateSettingsResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) Interrupt(ctx context.Context, in *InterruptRequest) (*InterruptResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/Interrupt", Body: protoBytes(in)})
+func (c *AgentServiceClient) Interrupt(ctx context.Context, in *InterruptRequest, opts ...easyrpc.CallOption) (*InterruptResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/Interrupt", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &InterruptResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) Compact(ctx context.Context, in *CompactRequest) (*CompactResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/Compact", Body: protoBytes(in)})
+func (c *AgentServiceClient) Compact(ctx context.Context, in *CompactRequest, opts ...easyrpc.CallOption) (*CompactResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/Compact", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &CompactResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) ListProviders(ctx context.Context, in *ListProvidersRequest) (*ListProvidersResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/ListProviders", Body: protoBytes(in)})
+func (c *AgentServiceClient) ListProviders(ctx context.Context, in *ListProvidersRequest, opts ...easyrpc.CallOption) (*ListProvidersResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/ListProviders", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &ListProvidersResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) ListProvidersCatalog(ctx context.Context, in *ListProvidersCatalogRequest) (*ListProvidersCatalogResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/ListProvidersCatalog", Body: protoBytes(in)})
+func (c *AgentServiceClient) ListProvidersCatalog(ctx context.Context, in *ListProvidersCatalogRequest, opts ...easyrpc.CallOption) (*ListProvidersCatalogResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/ListProvidersCatalog", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &ListProvidersCatalogResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) RegisterProvider(ctx context.Context, in *RegisterProviderRequest) (*RegisterProviderResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/RegisterProvider", Body: protoBytes(in)})
+func (c *AgentServiceClient) RegisterProvider(ctx context.Context, in *RegisterProviderRequest, opts ...easyrpc.CallOption) (*RegisterProviderResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/RegisterProvider", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &RegisterProviderResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) DeleteProvider(ctx context.Context, in *DeleteProviderRequest) (*DeleteProviderResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/DeleteProvider", Body: protoBytes(in)})
+func (c *AgentServiceClient) DeleteProvider(ctx context.Context, in *DeleteProviderRequest, opts ...easyrpc.CallOption) (*DeleteProviderResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/DeleteProvider", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &DeleteProviderResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) TestProvider(ctx context.Context, in *TestProviderRequest) (*TestProviderResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/TestProvider", Body: protoBytes(in)})
+func (c *AgentServiceClient) TestProvider(ctx context.Context, in *TestProviderRequest, opts ...easyrpc.CallOption) (*TestProviderResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/TestProvider", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &TestProviderResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) ListModels(ctx context.Context, in *ListModelsRequest) (*ListModelsResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/ListModels", Body: protoBytes(in)})
+func (c *AgentServiceClient) ListModels(ctx context.Context, in *ListModelsRequest, opts ...easyrpc.CallOption) (*ListModelsResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/ListModels", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &ListModelsResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) ListPresets(ctx context.Context, in *ListPresetsRequest) (*ListPresetsResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/ListPresets", Body: protoBytes(in)})
+func (c *AgentServiceClient) ListPresets(ctx context.Context, in *ListPresetsRequest, opts ...easyrpc.CallOption) (*ListPresetsResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/ListPresets", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &ListPresetsResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) UpsertPreset(ctx context.Context, in *UpsertPresetRequest) (*UpsertPresetResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/UpsertPreset", Body: protoBytes(in)})
+func (c *AgentServiceClient) UpsertPreset(ctx context.Context, in *UpsertPresetRequest, opts ...easyrpc.CallOption) (*UpsertPresetResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/UpsertPreset", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &UpsertPresetResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) DeletePreset(ctx context.Context, in *DeletePresetRequest) (*DeletePresetResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/DeletePreset", Body: protoBytes(in)})
+func (c *AgentServiceClient) DeletePreset(ctx context.Context, in *DeletePresetRequest, opts ...easyrpc.CallOption) (*DeletePresetResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/DeletePreset", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &DeletePresetResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) PreviewPreset(ctx context.Context, in *PreviewPresetRequest) (*PreviewPresetResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/PreviewPreset", Body: protoBytes(in)})
+func (c *AgentServiceClient) PreviewPreset(ctx context.Context, in *PreviewPresetRequest, opts ...easyrpc.CallOption) (*PreviewPresetResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/PreviewPreset", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &PreviewPresetResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) GetConfig(ctx context.Context, in *GetConfigRequest) (*GetConfigResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/GetConfig", Body: protoBytes(in)})
+func (c *AgentServiceClient) GetConfig(ctx context.Context, in *GetConfigRequest, opts ...easyrpc.CallOption) (*GetConfigResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/GetConfig", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &GetConfigResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) SetConfig(ctx context.Context, in *SetConfigRequest) (*SetConfigResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/SetConfig", Body: protoBytes(in)})
+func (c *AgentServiceClient) SetConfig(ctx context.Context, in *SetConfigRequest, opts ...easyrpc.CallOption) (*SetConfigResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/SetConfig", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &SetConfigResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) ListTools(ctx context.Context, in *ListToolsRequest) (*ListToolsResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/ListTools", Body: protoBytes(in)})
+func (c *AgentServiceClient) ListTools(ctx context.Context, in *ListToolsRequest, opts ...easyrpc.CallOption) (*ListToolsResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/ListTools", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &ListToolsResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) GetToolConfig(ctx context.Context, in *GetToolConfigRequest) (*GetToolConfigResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/GetToolConfig", Body: protoBytes(in)})
+func (c *AgentServiceClient) GetToolConfig(ctx context.Context, in *GetToolConfigRequest, opts ...easyrpc.CallOption) (*GetToolConfigResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/GetToolConfig", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &GetToolConfigResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) SetToolConfig(ctx context.Context, in *SetToolConfigRequest) (*SetToolConfigResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/SetToolConfig", Body: protoBytes(in)})
+func (c *AgentServiceClient) SetToolConfig(ctx context.Context, in *SetToolConfigRequest, opts ...easyrpc.CallOption) (*SetToolConfigResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/SetToolConfig", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &SetToolConfigResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) SetExtensionConfig(ctx context.Context, in *SetExtensionConfigRequest) (*SetExtensionConfigResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/SetExtensionConfig", Body: protoBytes(in)})
+func (c *AgentServiceClient) SetExtensionConfig(ctx context.Context, in *SetExtensionConfigRequest, opts ...easyrpc.CallOption) (*SetExtensionConfigResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/SetExtensionConfig", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &SetExtensionConfigResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) UploadFile(ctx context.Context, in *UploadFileRequest) (*UploadFileResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/UploadFile", Body: protoBytes(in)})
+func (c *AgentServiceClient) UploadFile(ctx context.Context, in *UploadFileRequest, opts ...easyrpc.CallOption) (*UploadFileResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/UploadFile", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &UploadFileResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) IngestFile(ctx context.Context, in *IngestFileRequest) (*IngestFileResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/IngestFile", Body: protoBytes(in)})
+func (c *AgentServiceClient) IngestFile(ctx context.Context, in *IngestFileRequest, opts ...easyrpc.CallOption) (*IngestFileResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/IngestFile", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &IngestFileResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) GetFile(ctx context.Context, in *GetFileRequest) (*GetFileResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/GetFile", Body: protoBytes(in)})
+func (c *AgentServiceClient) GetFile(ctx context.Context, in *GetFileRequest, opts ...easyrpc.CallOption) (*GetFileResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/GetFile", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &GetFileResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) GetFileMeta(ctx context.Context, in *GetFileMetaRequest) (*GetFileMetaResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/GetFileMeta", Body: protoBytes(in)})
+func (c *AgentServiceClient) GetFileMeta(ctx context.Context, in *GetFileMetaRequest, opts ...easyrpc.CallOption) (*GetFileMetaResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/GetFileMeta", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &GetFileMetaResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AgentServiceClient) GetAgentConfig(ctx context.Context, in *GetAgentConfigRequest) (*GetAgentConfigResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/GetAgentConfig", Body: protoBytes(in)})
+func (c *AgentServiceClient) GetAgentConfig(ctx context.Context, in *GetAgentConfigRequest, opts ...easyrpc.CallOption) (*GetAgentConfigResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/GetAgentConfig", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &GetAgentConfigResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
@@ -436,270 +515,309 @@ func RegisterAgentServiceService(impl AgentServiceService) *easyrpc.ServiceRegis
 	reg := easyrpc.NewServiceRegistry()
 	reg.Unary["Health"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &HealthRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.Health(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["ListSessions"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &ListSessionsRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.ListSessions(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["CreateSession"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &CreateSessionRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.CreateSession(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["GetSession"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &GetSessionRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.GetSession(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["DeleteSession"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &DeleteSessionRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.DeleteSession(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["ListMessages"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &ListMessagesRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.ListMessages(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Stream["Prompt"] = func(ctx context.Context, req []byte, emit func([]byte, bool) error) error {
 		in := &PromptRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return err }
-		return impl.Prompt(ctx, in, func(out *PromptResponse) error { return emit(protoBytes(out), false) })
+		if err := decodeMsg(req, in, easyrpc.HandlerContextFromContext(ctx).Kind); err != nil { return err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		return impl.Prompt(ctx, in, func(out *PromptResponse) error { return emit(encodeMsg(out, kind), false) })
 	}
 	reg.Stream["WatchSession"] = func(ctx context.Context, req []byte, emit func([]byte, bool) error) error {
 		in := &WatchSessionRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return err }
-		return impl.WatchSession(ctx, in, func(out *WatchSessionResponse) error { return emit(protoBytes(out), false) })
+		if err := decodeMsg(req, in, easyrpc.HandlerContextFromContext(ctx).Kind); err != nil { return err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		return impl.WatchSession(ctx, in, func(out *WatchSessionResponse) error { return emit(encodeMsg(out, kind), false) })
 	}
 	reg.Stream["WatchSessions"] = func(ctx context.Context, req []byte, emit func([]byte, bool) error) error {
 		in := &WatchSessionsRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return err }
-		return impl.WatchSessions(ctx, in, func(out *WatchSessionsResponse) error { return emit(protoBytes(out), false) })
+		if err := decodeMsg(req, in, easyrpc.HandlerContextFromContext(ctx).Kind); err != nil { return err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		return impl.WatchSessions(ctx, in, func(out *WatchSessionsResponse) error { return emit(encodeMsg(out, kind), false) })
 	}
 	reg.Unary["Fork"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &ForkRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.Fork(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["Rename"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &RenameRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.Rename(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["SetModel"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &SetModelRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.SetModel(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["Undo"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &UndoRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.Undo(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["State"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &StateRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.State(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["Mailbox"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &MailboxRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.Mailbox(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["UpdateSettings"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &UpdateSettingsRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.UpdateSettings(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["Interrupt"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &InterruptRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.Interrupt(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["Compact"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &CompactRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.Compact(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["ListProviders"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &ListProvidersRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.ListProviders(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["ListProvidersCatalog"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &ListProvidersCatalogRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.ListProvidersCatalog(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["RegisterProvider"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &RegisterProviderRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.RegisterProvider(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["DeleteProvider"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &DeleteProviderRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.DeleteProvider(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["TestProvider"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &TestProviderRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.TestProvider(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["ListModels"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &ListModelsRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.ListModels(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["ListPresets"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &ListPresetsRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.ListPresets(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["UpsertPreset"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &UpsertPresetRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.UpsertPreset(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["DeletePreset"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &DeletePresetRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.DeletePreset(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["PreviewPreset"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &PreviewPresetRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.PreviewPreset(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["GetConfig"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &GetConfigRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.GetConfig(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["SetConfig"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &SetConfigRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.SetConfig(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["ListTools"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &ListToolsRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.ListTools(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["GetToolConfig"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &GetToolConfigRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.GetToolConfig(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["SetToolConfig"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &SetToolConfigRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.SetToolConfig(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["SetExtensionConfig"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &SetExtensionConfigRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.SetExtensionConfig(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["UploadFile"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &UploadFileRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.UploadFile(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["IngestFile"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &IngestFileRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.IngestFile(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["GetFile"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &GetFileRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.GetFile(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["GetFileMeta"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &GetFileMetaRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.GetFileMeta(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["GetAgentConfig"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &GetAgentConfigRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.GetAgentConfig(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	return reg
 }
@@ -720,75 +838,91 @@ func AdminService_Methods() []easyrpc.MethodSpec {
 type AdminServiceClient struct { rt easyrpc.Transport }
 func NewAdminServiceClient(rt easyrpc.Transport) *AdminServiceClient { return &AdminServiceClient{rt: rt} }
 
-func (c *AdminServiceClient) ListTenants(ctx context.Context, in *ListTenantsRequest) (*ListTenantsResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AdminService/ListTenants", Body: protoBytes(in)})
+func (c *AdminServiceClient) ListTenants(ctx context.Context, in *ListTenantsRequest, opts ...easyrpc.CallOption) (*ListTenantsResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AdminService/ListTenants", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &ListTenantsResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AdminServiceClient) CreateTenant(ctx context.Context, in *CreateTenantRequest) (*CreateTenantResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AdminService/CreateTenant", Body: protoBytes(in)})
+func (c *AdminServiceClient) CreateTenant(ctx context.Context, in *CreateTenantRequest, opts ...easyrpc.CallOption) (*CreateTenantResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AdminService/CreateTenant", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &CreateTenantResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AdminServiceClient) UpdateTenant(ctx context.Context, in *UpdateTenantRequest) (*UpdateTenantResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AdminService/UpdateTenant", Body: protoBytes(in)})
+func (c *AdminServiceClient) UpdateTenant(ctx context.Context, in *UpdateTenantRequest, opts ...easyrpc.CallOption) (*UpdateTenantResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AdminService/UpdateTenant", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &UpdateTenantResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AdminServiceClient) DeleteTenant(ctx context.Context, in *DeleteTenantRequest) (*DeleteTenantResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AdminService/DeleteTenant", Body: protoBytes(in)})
+func (c *AdminServiceClient) DeleteTenant(ctx context.Context, in *DeleteTenantRequest, opts ...easyrpc.CallOption) (*DeleteTenantResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AdminService/DeleteTenant", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &DeleteTenantResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AdminServiceClient) IssueTenantToken(ctx context.Context, in *IssueTenantTokenRequest) (*IssueTenantTokenResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AdminService/IssueTenantToken", Body: protoBytes(in)})
+func (c *AdminServiceClient) IssueTenantToken(ctx context.Context, in *IssueTenantTokenRequest, opts ...easyrpc.CallOption) (*IssueTenantTokenResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AdminService/IssueTenantToken", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &IssueTenantTokenResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AdminServiceClient) ListTenantTokens(ctx context.Context, in *ListTenantTokensRequest) (*ListTenantTokensResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AdminService/ListTenantTokens", Body: protoBytes(in)})
+func (c *AdminServiceClient) ListTenantTokens(ctx context.Context, in *ListTenantTokensRequest, opts ...easyrpc.CallOption) (*ListTenantTokensResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AdminService/ListTenantTokens", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &ListTenantTokensResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AdminServiceClient) RevokeTenantToken(ctx context.Context, in *RevokeTenantTokenRequest) (*RevokeTenantTokenResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AdminService/RevokeTenantToken", Body: protoBytes(in)})
+func (c *AdminServiceClient) RevokeTenantToken(ctx context.Context, in *RevokeTenantTokenRequest, opts ...easyrpc.CallOption) (*RevokeTenantTokenResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AdminService/RevokeTenantToken", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &RevokeTenantTokenResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
-func (c *AdminServiceClient) RotateTenantToken(ctx context.Context, in *RotateTenantTokenRequest) (*RotateTenantTokenResponse, error) {
-	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AdminService/RotateTenantToken", Body: protoBytes(in)})
+func (c *AdminServiceClient) RotateTenantToken(ctx context.Context, in *RotateTenantTokenRequest, opts ...easyrpc.CallOption) (*RotateTenantTokenResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AdminService/RotateTenantToken", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &RotateTenantTokenResponse{}
-	if err := proto.Unmarshal(resp.Body, out); err != nil { return nil, err }
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
 
@@ -807,59 +941,67 @@ func RegisterAdminServiceService(impl AdminServiceService) *easyrpc.ServiceRegis
 	reg := easyrpc.NewServiceRegistry()
 	reg.Unary["ListTenants"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &ListTenantsRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.ListTenants(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["CreateTenant"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &CreateTenantRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.CreateTenant(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["UpdateTenant"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &UpdateTenantRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.UpdateTenant(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["DeleteTenant"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &DeleteTenantRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.DeleteTenant(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["IssueTenantToken"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &IssueTenantTokenRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.IssueTenantToken(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["ListTenantTokens"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &ListTenantTokensRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.ListTenantTokens(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["RevokeTenantToken"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &RevokeTenantTokenRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.RevokeTenantToken(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	reg.Unary["RotateTenantToken"] = func(ctx context.Context, req []byte) ([]byte, error) {
 		in := &RotateTenantTokenRequest{}
-		if err := proto.Unmarshal(req, in); err != nil { return nil, err }
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.RotateTenantToken(ctx, in)
 		if err != nil { return nil, err }
-		return protoBytes(out), nil
+		return encodeMsg(out, kind), nil
 	}
 	return reg
 }
@@ -869,3 +1011,20 @@ func protoBytes(m proto.Message) []byte {
 	return b
 }
 
+func encodeMsg(m proto.Message, kind easyrpc.ContentKind) []byte {
+	if kind == easyrpc.KindJSON {
+		b, err := protojson.Marshal(m)
+		if err != nil {
+			return []byte("{}")
+		}
+		return b
+	}
+	return protoBytes(m)
+}
+
+func decodeMsg(b []byte, m proto.Message, kind easyrpc.ContentKind) error {
+	if kind == easyrpc.KindJSON {
+		return protojson.UnmarshalOptions{DiscardUnknown: true}.Unmarshal(b, m)
+	}
+	return proto.Unmarshal(b, m)
+}
