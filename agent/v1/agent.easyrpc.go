@@ -11,6 +11,7 @@ import (
 func AgentService_Methods() []easyrpc.MethodSpec {
 	return []easyrpc.MethodSpec{
 		{Service: "agent.v1.AgentService", Name: "Health", Path: "/agent.v1.AgentService/Health", ClientStream: false, ServerStream: false},
+		{Service: "agent.v1.AgentService", Name: "GetIdentity", Path: "/agent.v1.AgentService/GetIdentity", ClientStream: false, ServerStream: false},
 		{Service: "agent.v1.AgentService", Name: "ListSessions", Path: "/agent.v1.AgentService/ListSessions", ClientStream: false, ServerStream: false},
 		{Service: "agent.v1.AgentService", Name: "CreateSession", Path: "/agent.v1.AgentService/CreateSession", ClientStream: false, ServerStream: false},
 		{Service: "agent.v1.AgentService", Name: "GetSession", Path: "/agent.v1.AgentService/GetSession", ClientStream: false, ServerStream: false},
@@ -63,6 +64,17 @@ func (c *AgentServiceClient) Health(ctx context.Context, in *HealthRequest, opts
 	if err != nil { return nil, err }
 	if resp.Error != nil { return nil, resp.Error }
 	out := &HealthResponse{}
+	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
+	return out, nil
+}
+
+func (c *AgentServiceClient) GetIdentity(ctx context.Context, in *GetIdentityRequest, opts ...easyrpc.CallOption) (*GetIdentityResponse, error) {
+	kind := easyrpc.KindProto
+	for _, o := range opts { o(&kind) }
+	resp, err := c.rt.Send(ctx, easyrpc.Request{URL: "/agent.v1.AgentService/GetIdentity", Headers: easyrpc.Headers{"Content-Type": []string{easyrpc.ContentTypeFor(false, kind)}}, Body: encodeMsg(in, kind)})
+	if err != nil { return nil, err }
+	if resp.Error != nil { return nil, resp.Error }
+	out := &GetIdentityResponse{}
 	if err := decodeMsg(resp.Body, out, kind); err != nil { return nil, err }
 	return out, nil
 }
@@ -478,6 +490,7 @@ func (c *AgentServiceClient) GetAgentConfig(ctx context.Context, in *GetAgentCon
 
 type AgentServiceService interface {
 	Health(ctx context.Context, in *HealthRequest) (*HealthResponse, error)
+	GetIdentity(ctx context.Context, in *GetIdentityRequest) (*GetIdentityResponse, error)
 	ListSessions(ctx context.Context, in *ListSessionsRequest) (*ListSessionsResponse, error)
 	CreateSession(ctx context.Context, in *CreateSessionRequest) (*CreateSessionResponse, error)
 	GetSession(ctx context.Context, in *GetSessionRequest) (*GetSessionResponse, error)
@@ -526,6 +539,14 @@ func RegisterAgentServiceService(impl AgentServiceService) *easyrpc.ServiceRegis
 		kind := easyrpc.HandlerContextFromContext(ctx).Kind
 		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
 		out, err := impl.Health(ctx, in)
+		if err != nil { return nil, err }
+		return encodeMsg(out, kind), nil
+	}
+	reg.Unary["GetIdentity"] = func(ctx context.Context, req []byte) ([]byte, error) {
+		in := &GetIdentityRequest{}
+		kind := easyrpc.HandlerContextFromContext(ctx).Kind
+		if err := decodeMsg(req, in, kind); err != nil { return nil, err }
+		out, err := impl.GetIdentity(ctx, in)
 		if err != nil { return nil, err }
 		return encodeMsg(out, kind), nil
 	}
